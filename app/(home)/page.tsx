@@ -5,17 +5,17 @@ import BookList from './components/BookList'
 
 const page = async () => {
 
+  console.log(process.env.API_URL)
   const response = await fetch(`${process.env.API_URL}/books`)
-  const book = response.json();
-  console.log(response)
-  console.log(book)
 
+  const books = await response.json();
+  console.log(books)
 
   return (
     <div>
       <Banner />
       {/* <Card /> */}
-      <BookList />
+      <BookList books={books} />
     </div>
   )
 }

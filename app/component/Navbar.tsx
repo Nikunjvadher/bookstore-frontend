@@ -17,8 +17,8 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="flex gap-2 items-center">
-                    <button className=' h-10 rounded-md border border-primary-500 px-4 py-2 '>Sign In</button>
-                    <button className=' h-10 rounded-md border border-primary-500 px-4 py-2 '>Sign Up</button>
+                    <Link href='/' className=' h-10 rounded-md border border-primary-500 px-4 py-2 hover:bg-primary-500 hover:text-white'>Sign In</Link>
+                    <Link href='/' className=' h-10 rounded-md border border-primary-500 px-4 py-2 hover:bg-primary-500 hover:text-white'>Sign Up</Link>
                 </div>
             </div>
         </nav>

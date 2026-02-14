@@ -7,9 +7,6 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const response = await fetch(`${process.env.API_URL}/books/${id}`);
   const book = await response.json();
   console.log(book);
-
-
-
   return (
 
     <div className="container mx-auto flex justify-around px-5 py-10">

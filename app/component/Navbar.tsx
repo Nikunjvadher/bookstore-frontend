@@ -86,8 +86,8 @@ const Hexagon = () => (
         width="45"
         height="45"
         viewBox="0 0 24 24"
-        fill="#0DD4F2"
-        stroke="#0DD4F2"
+        fill="#64748B"
+        stroke="#64748B"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -102,7 +102,7 @@ const BookIcon = () => (
         fill="#fff"
         viewBox="0 0 24 24"
         strokeWidth={2}
-        stroke="#0DD4F2"
+        stroke="#64748B"
         className="absolute left-1/2 top-1/2 h-8 w-8 -translate-x-1/2 -translate-y-1/2 transform">
         <path
             strokeLinecap="round"
@@ -111,4 +111,3 @@ const BookIcon = () => (
         />
     </svg>
 );
-

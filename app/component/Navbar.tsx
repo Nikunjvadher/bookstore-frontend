@@ -1,7 +1,34 @@
+'use client';
+
 import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
+    // Check auth state on client side only - use lazy initializer to avoid setState in effect
+    const [isLoggedIn, setIsLoggedIn] = React.useState(() => {
+        if (typeof window !== 'undefined') {
+            return !!localStorage.getItem('token');
+        }
+        return false;
+    });
+
+    // Listen for storage changes to update auth state
+    React.useEffect(() => {
+        const handleStorageChange = () => {
+            const token = localStorage.getItem('token');
+            setIsLoggedIn(!!token);
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        // Also check on mount in case token changed
+        window.addEventListener('token-change', handleStorageChange);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('token-change', handleStorageChange);
+        };
+    }, []);
+
     return (
         <nav className='border-b border-primary-500 bg-white/80 backdrop-blur-md sticky top-0 z-50'>
             <div className='container mx-auto flex justify-between items-center py-3 px-4'>
@@ -17,12 +44,31 @@ const Navbar = () => {
                     </Link>
                 </div>
                 <div className="flex gap-3 items-center">
-                    <Link href='/login' className='h-10 rounded-lg border border-primary-500 px-5 py-2 text-primary-500 font-medium hover:bg-primary-500 hover:text-white transition-all duration-300'>
-                        Sign In
-                    </Link>
-                    <Link href='/signup' className='h-10 rounded-lg bg-linear-to-br from-primary-500 to-primary-600 px-5 py-2 text-white font-medium hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-md hover:shadow-lg'>
-                        Sign Up
-                    </Link>
+                    {isLoggedIn ? (
+                        <>
+                            <Link href='/profile' className='h-10 rounded-lg border border-primary-500 px-5 py-2 text-primary-500 font-medium hover:bg-primary-500 hover:text-white transition-all duration-300'>
+                                My Profile
+                            </Link>
+                            <button
+                                onClick={() => {
+                                    localStorage.removeItem('token');
+                                    window.location.href = '/';
+                                }}
+                                className='h-10 rounded-lg bg-linear-to-br from-red-500 to-red-600 px-5 py-2 text-white font-medium hover:from-red-600 hover:to-red-700 transition-all duration-300 shadow-md hover:shadow-lg'
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link href='/login' className='h-10 rounded-lg border border-primary-500 px-5 py-2 text-primary-500 font-medium hover:bg-primary-500 hover:text-white transition-all duration-300'>
+                                Sign In
+                            </Link>
+                            <Link href='/signup' className='h-10 rounded-lg bg-linear-to-br from-primary-500 to-primary-600 px-5 py-2 text-white font-medium hover:from-primary-600 hover:to-primary-700 transition-all duration-300 shadow-md hover:shadow-lg'>
+                                Sign Up
+                            </Link>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>

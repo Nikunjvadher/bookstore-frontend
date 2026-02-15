@@ -44,7 +44,9 @@ const LoginPage = () => {
             }
 
             const data = await response.json();
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.accesToken || data.token);
+            // Dispatch custom event to update Navbar
+            window.dispatchEvent(new Event('token-change'));
             router.push('/');
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Login failed. Please try again.');

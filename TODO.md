@@ -1,38 +1,23 @@
-# TODO - Book Detail Page & Auth Pages UI Enhancement
+# Implementation Plan - User Books Feature
 
-## Phase 1: Book Detail Page (`app/books/[id]/page.tsx`)
+## Phase 1: Update Frontend Types
 
-- [ ] 1.1 Create hero section with gradient background and subtle pattern
-- [ ] 1.2 Implement split layout with book details on left, cover image on right
-- [ ] 1.3 Add enhanced cover image with shadow, rounded corners, and hover effect
-- [ ] 1.4 Add action buttons (Download, Add to Favorites, Share) with icons
-- [ ] 1.5 Display book metadata (publisher, publication year, pages, ISBN)
-- [ ] 1.6 Create author section with avatar and bio
-- [ ] 1.7 Add loading state with skeleton loader
-- [ ] 1.8 Add error state with user-friendly message
-- [ ] 1.9 Ensure fully responsive design
+- [x] 1.1 Update /app/types/index.ts to include all book fields (genre, description)
 
-## Phase 2: Button Component Enhancement (`app/component/Button.tsx`)
+## Phase 2: Add Backend Endpoint for User's Books
 
-- [ ] 2.1 Add icons to button
-- [ ] 2.2 Improve styling with better hover effects
-- [ ] 2.3 Add multiple button variants (primary, secondary, outline)
+- [x] 2.1 Create endpoint to fetch books by a specific user
 
-## Phase 3: Footer Enhancement (`app/component/Footer.tsx`)
+## Phase 3: Create Book Upload Component
 
-- [ ] 3.1 Create professional multi-column footer
-- [ ] 3.2 Add social links and navigation links
+- [x] 3.1 Create BookUpload component in /app/component/
 
-## Phase 4: Login Page (`app/login/page.tsx`)
+## Phase 4: Create User Profile Page
 
-- [ ] 4.1 Create modern login form
-- [ ] 4.2 Add email and password fields
-- [ ] 4.3 Add remember me and forgot password options
-- [ ] 4.4 Add link to signup page
+- [x] 4.1 Create /app/profile/page.tsx
+- [x] 4.2 Display user's uploaded books
+- [x] 4.3 Add book upload functionality
 
-## Phase 5: Signup Page (`app/signup/page.tsx`)
+## Phase 5: Update Navigation
 
-- [ ] 5.1 Create modern signup form
-- [ ] 5.2 Add name, email, password fields
-- [ ] 5.3 Add confirm password field
-- [ ] 5.4 Add link to login page
+- [x] 5.1 Add profile link to Navbar

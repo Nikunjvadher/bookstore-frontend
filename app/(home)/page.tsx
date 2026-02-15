@@ -11,7 +11,6 @@ const page = async () => {
       <Banner />
       {/* <Card /> */}
       <Suspense fallback={<div>Loading...</div>}>
-
         <BookList />
       </Suspense>
     </div>

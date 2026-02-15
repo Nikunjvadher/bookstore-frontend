@@ -132,7 +132,14 @@ const BookDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/${id}`);
+
+      // Check if API URL is defined
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (!apiUrl) {
+        throw new Error('API URL is not configured. Please check your environment variables.');
+      }
+
+      const response = await fetch(`${apiUrl}/books/${id}`);
 
       if (!response.ok) {
         throw new Error('Failed to fetch book details. Please try again.');

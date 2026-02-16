@@ -6,12 +6,11 @@ const Banner = () => {
             {/* Premium Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-primary-800 to-slate-900"></div>
 
-            {/* Animated Grid Pattern */}
-            <div className="absolute inset-0 opacity-[0.03]">
+            {/* Subtle Dot Pattern */}
+            <div className="absolute inset-0 opacity-[0.02]">
                 <div className="absolute inset-0" style={{
-                    backgroundImage: `linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)`,
-                    backgroundSize: '60px 60px'
+                    backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)`,
+                    backgroundSize: '40px 40px'
                 }}></div>
             </div>
 
@@ -115,17 +114,21 @@ const Banner = () => {
 
                             {/* Book Preview Items */}
                             <div className="space-y-4">
-                                {[1, 2, 3].map((item) => (
-                                    <div key={item} className="flex items-center gap-4 p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors cursor-pointer group">
-                                        <div className="w-12 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                                            <span className="text-white font-bold text-lg">{item}</span>
+                                {[
+                                    { icon: '📚', title: 'Classic Literature', subtitle: '2,500+ Books' },
+                                    { icon: '🎨', title: 'Art & Design', subtitle: '1,200+ Books' },
+                                    { icon: '💡', title: 'Self Development', subtitle: '3,800+ Books' }
+                                ].map((item, index) => (
+                                    <div key={index} className="flex items-center gap-4 p-4 bg-white/5 backdrop-blur-sm rounded-xl hover:bg-white/10 transition-all duration-300 cursor-pointer group border border-white/10 hover:border-white/20">
+                                        <div className="w-14 h-14 bg-gradient-to-br from-white/20 to-white/5 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border border-white/20">
+                                            <span className="text-2xl">{item.icon}</span>
                                         </div>
                                         <div className="flex-1">
-                                            <div className="h-2 bg-white/20 rounded w-3/4 mb-2"></div>
-                                            <div className="h-2 bg-white/10 rounded w-1/2"></div>
+                                            <div className="text-white font-semibold text-sm mb-1">{item.title}</div>
+                                            <div className="text-white/50 text-xs">{item.subtitle}</div>
                                         </div>
-                                        <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-amber-400/20 transition-colors">
-                                            <svg className="w-4 h-4 text-white/60 group-hover:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <div className="w-9 h-9 bg-gradient-to-br from-amber-400/20 to-amber-600/10 rounded-full flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-amber-400/30 group-hover:to-amber-600/20 transition-all duration-300 border border-amber-400/20">
+                                            <svg className="w-4 h-4 text-amber-400/80 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                             </svg>
                                         </div>

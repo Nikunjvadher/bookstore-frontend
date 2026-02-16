@@ -5,7 +5,7 @@ const Banner = () => {
         <div className='relative w-full overflow-hidden min-h-[600px] flex items-center'>
             {/* Premium Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-primary-800 to-slate-900"></div>
-            
+
             {/* Animated Grid Pattern */}
             <div className="absolute inset-0 opacity-[0.03]">
                 <div className="absolute inset-0" style={{
@@ -22,13 +22,12 @@ const Banner = () => {
 
             {/* Geometric Accent Shapes */}
             <div className="absolute top-32 right-[20%] w-4 h-4 bg-amber-400/60 rotate-45"></div>
-            <div className="absolute bottom-40 left-[15%] w-3 h-3 bg-white/40 rounded-full"></div>
             <div className="absolute top-40 right-[35%] w-2 h-2 bg-primary-300/60 rounded-full"></div>
 
             {/* Main Content */}
             <div className="container mx-auto px-4 py-16 relative z-10">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-                    
+
                     {/* Left Content */}
                     <div className="text-center lg:text-left max-w-2xl">
                         {/* Premium Badge */}
@@ -52,8 +51,8 @@ const Banner = () => {
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <Link 
-                                href="#books" 
+                            <Link
+                                href="#books"
                                 className="group relative px-8 py-4 bg-white text-slate-900 font-semibold rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-white/20 hover:-translate-y-1"
                             >
                                 <span className="relative z-10 flex items-center justify-center gap-2">
@@ -63,9 +62,9 @@ const Banner = () => {
                                     </svg>
                                 </span>
                             </Link>
-                            
-                            <Link 
-                                href="/signup" 
+
+                            <Link
+                                href="/signup"
                                 className="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-2xl border border-white/30 hover:bg-white/20 transition-all duration-300 hover:-translate-y-1"
                             >
                                 <span className="flex items-center justify-center gap-2">

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import BookUpload from '@/app/component/BookUpload';
-import { Book} from '@/app/types';
+import { Book } from '@/app/types';
 
 const ProfilePage = () => {
     const [books, setBooks] = useState<Book[]>([]);
@@ -28,13 +28,17 @@ const ProfilePage = () => {
 
     const fetchUserBooks = async (token: string) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/my-books`, {
+            const response = await fetch(`/api/books/my-books`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
 
             if (!response.ok) {
+                if (response.status === 401) {
+                    handleLogout();
+                    return;
+                }
                 throw new Error('Failed to fetch your books');
             }
 
@@ -49,13 +53,17 @@ const ProfilePage = () => {
 
     const fetchUserProfile = async (token: string) => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/profile`, {
+            const response = await fetch(`/api/user/profile`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 },
             });
 
             if (!response.ok) {
+                if (response.status === 401) {
+                    handleLogout();
+                    return;
+                }
                 throw new Error('Failed to fetch profile');
             }
 

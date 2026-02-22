@@ -49,7 +49,7 @@ const BookUpload: React.FC<BookUploadProps> = ({ onSuccess }) => {
                 return;
             }
 
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/books/register`, {
+            const response = await fetch(`/api/books`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,

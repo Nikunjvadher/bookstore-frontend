@@ -1,38 +1,12 @@
-import { Book } from "@/app/types"
+import connectDB from "@/lib/db"
+import BookModel from "@/models/Book"
+import UserModel from "@/models/User"
 import Card from "./Card"
 
-
-
 const BookList = async () => {
-  // Check if API URL is defined
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL
-
-  if (!apiUrl) {
-    console.error('NEXT_PUBLIC_API_URL is not defined')
-    return (
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12 text-center">
-        <div className="bg-red-50 border border-red-200 rounded-xl p-8 max-w-md mx-auto">
-          <svg className="w-12 h-12 text-red-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-          </svg>
-          <h3 className="text-lg font-semibold text-red-800 mb-2">Configuration Error</h3>
-          <p className="text-red-600">API URL is not configured. Please check your environment variables.</p>
-        </div>
-      </div>
-    )
-  }
-
   try {
-    const response = await fetch(`${apiUrl}/books`, {
-      // Add cache control for static generation
-      next: { revalidate: 60 }
-    })
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch books: ${response.status}`)
-    }
-
-    const books = await response.json();
+    await connectDB();
+    const books = await BookModel.find().populate('author', 'name').lean();
 
     if (!Array.isArray(books) || books.length === 0) {
       return (
@@ -48,10 +22,13 @@ const BookList = async () => {
       )
     }
 
+    // Convert _id to string for serialization
+    const serializedBooks = JSON.parse(JSON.stringify(books));
+
     return (
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 container mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {
-          books.map((book: Book) => {
+          serializedBooks.map((book: any) => {
             return <Card key={book._id} book={book} />
           })
         }

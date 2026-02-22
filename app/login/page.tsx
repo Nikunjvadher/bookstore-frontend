@@ -28,7 +28,7 @@ const LoginPage = () => {
         setError('');
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
+            const response = await fetch(`/api/user/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ const LoginPage = () => {
             }
 
             const data = await response.json();
-            localStorage.setItem('token', data.accesToken || data.token);
+            localStorage.setItem('token', data.accessToken || data.accesToken || data.token);
             // Dispatch custom event to update Navbar
             window.dispatchEvent(new Event('token-change'));
             router.push('/');

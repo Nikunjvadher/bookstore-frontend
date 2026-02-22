@@ -45,7 +45,7 @@ const SignupPage = () => {
         }
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, {
+            const response = await fetch(`/api/user/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

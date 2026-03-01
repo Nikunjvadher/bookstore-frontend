@@ -6,6 +6,8 @@ import Card from "./Card"
 const BookList = async () => {
   try {
     await connectDB();
+    // Simulate slow loading for verification
+    await new Promise(resolve => setTimeout(resolve, 3000));
     const books = await BookModel.find().populate('author', 'name').lean();
 
     if (!Array.isArray(books) || books.length === 0) {

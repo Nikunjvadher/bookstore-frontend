@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import Skeleton from 'react-loading-skeleton';
 import Button from '@/app/component/Button';
 
 // Types
@@ -29,24 +30,82 @@ interface Book {
 // Skeleton Loader Component
 const BookDetailSkeleton = () => (
   <div className="min-h-screen bg-linear-to-br from-slate-50 via-white to-slate-100">
-    <div className="container mx-auto px-4 py-12">
-      <div className="flex flex-col lg:flex-row gap-12">
-        {/* Cover Image Skeleton */}
-        <div className="w-full lg:w-1/3 flex justify-center">
-          <div className="w-64 h-96 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-2xl shadow-2xl"></div>
+    {/* Hero Section Skeleton */}
+    <div className="relative bg-primary-800 overflow-hidden">
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        <div className="mb-8">
+          <Skeleton width={200} height={20} baseColor="#1e293b" highlightColor="#334155" />
         </div>
 
-        {/* Details Skeleton */}
-        <div className="w-full lg:w-2/3 space-y-6">
-          <div className="h-12 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-lg w-3/4"></div>
-          <div className="h-to-r from-gray-6 bg-gradient-200 via-gray-100 to-gray-200 animate-pulse rounded-lg w-1/4"></div>
-          <div className="h-4 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-lg w-full"></div>
-          <div className="h-4 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-lg w-5/6"></div>
-          <div className="h-4 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-lg w-4/6"></div>
-          <div className="flex gap-4 pt-6">
-            <div className="h-12 w-36 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-xl"></div>
-            <div className="h-12 w-36 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-xl"></div>
-            <div className="h-12 w-36 bg-linear-to-br from-gray-200 via-gray-100 to-gray-200 animate-pulse rounded-xl"></div>
+        <div className="flex flex-col lg:flex-row gap-12 items-start">
+          {/* Cover Image Skeleton */}
+          <div className="w-full lg:w-1/3 flex justify-center lg:justify-start">
+            <div className="w-[280px] h-[420px] rounded-2xl overflow-hidden shadow-2xl">
+              <Skeleton height="100%" baseColor="#1e293b" highlightColor="#334155" />
+            </div>
+          </div>
+
+          {/* Details Skeleton */}
+          <div className="w-full lg:w-2/3">
+            <div className="mb-4">
+              <Skeleton width={120} height={28} borderRadius={20} baseColor="#1e293b" highlightColor="#334155" />
+            </div>
+            <div className="mb-6">
+              <Skeleton width="80%" height={48} baseColor="#1e293b" highlightColor="#334155" />
+            </div>
+
+            <div className="flex flex-wrap gap-6 mb-8">
+              {Array(4).fill(0).map((_, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <Skeleton circle width={40} height={40} baseColor="#1e293b" highlightColor="#334155" />
+                  <Skeleton width={100} height={20} baseColor="#1e293b" highlightColor="#334155" />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              <Skeleton width={160} height={48} borderRadius={12} baseColor="#1e293b" highlightColor="#334155" />
+              <Skeleton width={180} height={48} borderRadius={12} baseColor="#1e293b" highlightColor="#334155" />
+              <Skeleton width={100} height={48} borderRadius={12} baseColor="#1e293b" highlightColor="#334155" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Content Section Skeleton */}
+    <div className="container mx-auto px-4 py-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="lg:col-span-2 space-y-12">
+          <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <Skeleton width={200} height={32} className="mb-6" />
+            <Skeleton count={5} />
+          </div>
+          <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <Skeleton width={200} height={32} className="mb-6" />
+            <div className="flex gap-6">
+              <Skeleton circle width={80} height={80} />
+              <div className="flex-1">
+                <Skeleton width={150} height={28} className="mb-2" />
+                <Skeleton count={2} />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-2xl p-6 shadow-lg">
+            <Skeleton width={150} height={28} className="mb-4" />
+            <div className="space-y-4">
+              {Array(5).fill(0).map((_, i) => (
+                <div key={i} className="flex justify-between">
+                  <Skeleton width={80} height={20} />
+                  <Skeleton width={100} height={20} />
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <Skeleton height={44} borderRadius={8} />
+            </div>
           </div>
         </div>
       </div>
@@ -132,6 +191,9 @@ const BookDetailPage = ({ params }: { params: Promise<{ id: string }> }) => {
     try {
       setLoading(true);
       setError(null);
+
+      // Simulate slow loading for verification
+      await new Promise(resolve => setTimeout(resolve, 3000));
 
       // Check if API URL is defined
 

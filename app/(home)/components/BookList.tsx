@@ -3,12 +3,21 @@ import BookModel from "@/models/Book"
 import UserModel from "@/models/User"
 import Card from "./Card"
 
-const BookList = async () => {
+const BookList = async ({ search }: { search?: string }) => {
   try {
     await connectDB();
-    // Simulate slow loading for verification
-    await new Promise(resolve => setTimeout(resolve, 3000));
-    const books = await BookModel.find().populate('author', 'name').lean();
+
+    let query = {};
+    if (search) {
+      query = {
+        $or: [
+          { title: { $regex: search, $options: 'i' } },
+          { genre: { $regex: search, $options: 'i' } },
+        ]
+      };
+    }
+
+    const books = await BookModel.find(query).populate('author', 'name').lean();
 
     if (!Array.isArray(books) || books.length === 0) {
       return (

@@ -3,7 +3,9 @@ import Banner from './components/Banner'
 import BookList from './components/BookList'
 import SkeletonCard from './components/SkeletonCard'
 
-const page = async () => {
+const page = async ({ searchParams }: { searchParams: Promise<{ search?: string }> }) => {
+  const { search } = await searchParams;
+
   return (
     <div>
       <Banner />
@@ -14,7 +16,7 @@ const page = async () => {
           ))}
         </div>
       }>
-        <BookList />
+        <BookList search={search} />
       </Suspense>
     </div>
   )

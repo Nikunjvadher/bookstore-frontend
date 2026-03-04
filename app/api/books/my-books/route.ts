@@ -12,7 +12,18 @@ export async function GET(req: NextRequest) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        const books = await BookModel.find({ author: userId }).populate('author', 'name');
+        const { searchParams } = new URL(req.url);
+        const search = searchParams.get('search');
+
+        let query: any = { author: userId };
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { genre: { $regex: search, $options: 'i' } },
+            ];
+        }
+
+        const books = await BookModel.find(query).populate('author', 'name');
         return NextResponse.json(books);
     } catch (error) {
         console.error('Fetch my books error:', error);

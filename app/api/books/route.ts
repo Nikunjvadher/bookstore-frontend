@@ -6,10 +6,24 @@ import { verifyAuth } from '@/lib/auth';
 import { uploadToCloudinary } from '@/lib/cloudinary';
 
 // GET all books
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
         await connectDB();
-        const books = await BookModel.find().populate('author', 'name');
+
+        const { searchParams } = new URL(req.url);
+        const search = searchParams.get('search');
+
+        let query = {};
+        if (search) {
+            query = {
+                $or: [
+                    { title: { $regex: search, $options: 'i' } },
+                    { genre: { $regex: search, $options: 'i' } },
+                ]
+            };
+        }
+
+        const books = await BookModel.find(query).populate('author', 'name');
         return NextResponse.json(books);
     } catch (error) {
         console.error('List books error:', error);

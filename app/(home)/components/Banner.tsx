@@ -1,6 +1,44 @@
+'use client'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
 
 const Banner = () => {
+    const router = useRouter()
+    const searchParams = useSearchParams()
+    const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '')
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault()
+        const params = new URLSearchParams(searchParams.toString())
+        if (searchQuery) {
+            params.set('search', searchQuery)
+        } else {
+            params.delete('search')
+        }
+        router.push(`?${params.toString()}`, { scroll: false })
+    }
+
+    // Debounced Search Logic
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            const params = new URLSearchParams(searchParams.toString())
+            const currentSearch = searchParams.get('search') || ''
+
+            // Only update if the query has actually changed to avoid redundant navigation
+            if (searchQuery !== currentSearch) {
+                if (searchQuery) {
+                    params.set('search', searchQuery)
+                } else {
+                    params.delete('search')
+                }
+                router.push(`?${params.toString()}`, { scroll: false })
+            }
+        }, 300)
+
+        return () => clearTimeout(timer)
+    }, [searchQuery, router, searchParams])
+
     return (
         <div className='relative w-full overflow-hidden min-h-[600px] flex items-center'>
             {/* Premium Gradient Background */}
@@ -47,6 +85,27 @@ const Banner = () => {
                         <p className="text-white/70 text-lg md:text-xl mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                             Join thousands of readers in our curated library. Exchange knowledge, discover hidden gems, and build your personal collection.
                         </p>
+
+                        {/* Search Input */}
+                        <div className="mb-10 max-w-md mx-auto lg:mx-0">
+                            <form onSubmit={handleSearch} className="relative group">
+                                <input
+                                    type="text"
+                                    placeholder="Search by title or genre..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="w-full px-6 py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all duration-300 group-hover:bg-white/15"
+                                />
+                                <button
+                                    type="submit"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 p-2 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-xl transition-all duration-300 shadow-lg shadow-amber-500/20 active:scale-95"
+                                >
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
